@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diaby Assita — Virtual Assistance</title>
+<meta name="description" content="Portfolio professionnel de Diaby Assita — Virtual Assistance, Customer Service & Client Management.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F2ECDD;
+    --paper-card: #FBF8F0;
+    --ink: #23201B;
+    --ink-soft: #5C564C;
+    --pine: #2E5D53;
+    --pine-deep: #1E403A;
+    --pine-black: #0B1D19;
+    --ochre: #C4862F;
+    --gold-light: #E8B968;
+    --teal-light: #5FB3A1;
+    --line: rgba(35,32,27,0.14);
+    --tab-w: 84px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-weight:400;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-optical-sizing:auto; font-weight:650; letter-spacing:-0.015em; color:var(--pine-deep);}
+  h2{font-weight:600;}
+  h3{font-weight:600;}
+  em{font-style:italic; color:var(--ochre);}
+  strong, b{font-weight:600;}
+  .eyebrow{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--pine);}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 clamp(20px,5vw,56px);}
+
+  .shell{position:relative; padding-left:var(--tab-w);}
+  @media (max-width:760px){ .shell{padding-left:0;} }
+
+  .tab-rail{
+    position:fixed; left:0; top:0; bottom:0; width:var(--tab-w); z-index:40;
+    display:flex; flex-direction:column; padding-top:120px; gap:2px;
+  }
+  .tab-rail a{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--paper); background:var(--pine); padding:14px 8px;
+    writing-mode:vertical-rl; text-orientation:mixed; border-radius:0 8px 8px 0;
+    opacity:0.72; transition:opacity .25s ease, background .25s ease, padding-left .25s ease;
+    border-bottom:1px solid rgba(255,255,255,0.14);
+  }
+  .tab-rail a:hover, .tab-rail a.active{opacity:1; background:var(--ochre); padding-left:14px;}
+  @media (max-width:760px){ .tab-rail{display:none;} }
+
+  /* ---------- header: transitions from transparent-on-dark to solid paper ---------- */
+  header.top{
+    position:sticky; top:0; z-index:50;
+    background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .35s ease, border-color .35s ease;
+  }
+  header.top.scrolled{
+    background:rgba(242,236,221,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar{display:flex; align-items:center; justify-content:space-between; padding:18px 0; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-size:1.1rem; font-weight:700; color:var(--paper); transition:color .35s ease;}
+  header.top.scrolled .brand{color:var(--pine-deep);}
+  .brand .mark{
+    width:34px; height:34px; border-radius:8px; background:var(--ochre); color:#1a1a1a;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:500; transform:rotate(-3deg);
+  }
+  nav.desktop-nav{display:flex; gap:26px; font-size:0.86rem; color:rgba(242,236,221,0.78); transition:color .35s ease;}
+  header.top.scrolled nav.desktop-nav{color:var(--ink-soft);}
+  nav.desktop-nav a:hover{color:var(--gold-light);}
+  header.top.scrolled nav.desktop-nav a:hover{color:var(--pine-deep);}
+  .top-right{display:flex; align-items:center; gap:16px;}
+  .status-pill{
+    display:flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--paper); transition:color .35s ease;
+  }
+  header.top.scrolled .status-pill{color:var(--pine-deep);}
+  .status-pill .dot{width:7px; height:7px; border-radius:50%; background:var(--ochre); box-shadow:0 0 0 3px rgba(196,134,47,0.28);}
+
+  .lang-toggle{
+    display:flex; align-items:center; border:1px solid rgba(242,236,221,0.35); border-radius:20px; overflow:hidden;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; letter-spacing:0.04em;
+    transition:border-color .35s ease;
+  }
+  header.top.scrolled .lang-toggle{border-color:var(--line);}
+  .lang-toggle button{
+    padding:7px 13px; background:transparent; border:none; cursor:pointer; color:rgba(242,236,221,0.78);
+    font-family:inherit; font-size:inherit; transition:background .2s ease, color .2s ease;
+  }
+  header.top.scrolled .lang-toggle button{color:var(--ink-soft);}
+  .lang-toggle button.active{background:var(--ochre); color:#1a1a1a;}
+
+  @media (max-width:760px){nav.desktop-nav{display:none;}}
+
+  /* ---------- animated hero ---------- */
+  .hero-outer{
+    position:relative;
+    margin-left:calc(-1 * var(--tab-w));
+    width:calc(100% + var(--tab-w));
+    overflow:hidden;
+    background:linear-gradient(155deg, var(--pine-black) 0%, var(--pine-deep) 55%, #163832 100%);
+    background-size:200% 200%;
+    animation:heroGradient 18s ease-in-out infinite;
+  }
+  @media (max-width:760px){ .hero-outer{margin-left:0; width:100%;} }
+  @keyframes heroGradient{
+    0%{background-position:0% 30%;}
+    50%{background-position:100% 70%;}
+    100%{background-position:0% 30%;}
+  }
+
+  .hero-blobs{position:absolute; inset:0; z-index:0; pointer-events:none;}
+  .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:0.55; will-change:transform;}
+  .blob-1{width:420px; height:420px; background:radial-gradient(circle, var(--ochre), transparent 70%); top:-120px; left:-80px; animation:drift1 22s ease-in-out infinite;}
+  .blob-2{width:380px; height:380px; background:radial-gradient(circle, var(--teal-light), transparent 70%); bottom:-140px; right:-60px; animation:drift2 26s ease-in-out infinite;}
+  .blob-3{width:280px; height:280px; background:radial-gradient(circle, var(--gold-light), transparent 70%); top:40%; right:18%; animation:drift3 20s ease-in-out infinite;}
+  @keyframes drift1{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(60px,50px) scale(1.15);} }
+  @keyframes drift2{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-50px,-40px) scale(1.1);} }
+  @keyframes drift3{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-40px,60px) scale(0.9);} }
+
+  .hero-dots{
+    position:absolute; inset:0; z-index:0;
+    background-image:radial-gradient(circle, rgba(242,236,221,0.10) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:radial-gradient(circle at 60% 40%, black 0%, transparent 75%);
+  }
+
+  .hero{
+    position:relative; z-index:1;
+    padding:calc(clamp(64px,10vw,120px) + 64px) var(--tab-w) clamp(56px,8vw,96px) 0;
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center;
+  }
+  @media (max-width:860px){ .hero{grid-template-columns:1fr; text-align:left; padding-left:20px; padding-right:20px;} }
+  @media (min-width:861px){ .hero{padding-left:clamp(20px,5vw,56px); padding-right:clamp(20px,5vw,56px);} }
+
+  .hero .eyebrow{color:var(--gold-light); font-weight:500;}
+  .hero h1{
+    font-size:clamp(2.6rem, 5.6vw, 4.1rem); font-weight:700; line-height:1.05;
+    margin:20px 0 24px; color:var(--paper); letter-spacing:-0.02em;
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:600;
+    background:linear-gradient(100deg, var(--gold-light) 0%, var(--ochre) 55%, var(--gold-light) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lede{max-width:46ch; color:rgba(242,236,221,0.82); font-size:1.08rem; font-weight:400; line-height:1.7;}
+  .hero-cta{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; letter-spacing:0.03em;
+    padding:13px 22px; border-radius:6px; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .18s ease, box-shadow .18s ease; cursor:pointer;
+  }
+  .btn-solid{background:var(--ochre); color:#1a1408;}
+  .btn-solid:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(196,134,47,0.4);}
+  .btn-ghost{border:1px solid rgba(242,236,221,0.35); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--gold-light); color:var(--gold-light); transform:translateY(-2px);}
+
+  .hero-stats{display:flex; gap:28px; margin-top:44px; flex-wrap:wrap;}
+  .stat b{display:block; font-family:'Fraunces', serif; font-size:1.8rem; color:var(--paper); font-weight:700;}
+  .stat span{font-size:0.76rem; color:rgba(242,236,221,0.65); font-family:'IBM Plex Mono', monospace; letter-spacing:0.03em;}
+
+  .portrait-card{position:relative; justify-self:center; width:min(320px, 100%);}
+  .portrait-frame{
+    position:relative; background:rgba(255,255,255,0.07); border:1px solid rgba(242,236,221,0.22); border-radius:16px;
+    padding:14px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55); transform:rotate(1.6deg);
+    animation:floatCard 7s ease-in-out infinite;
+  }
+  @keyframes floatCard{ 0%,100%{transform:rotate(1.6deg) translateY(0);} 50%{transform:rotate(1.6deg) translateY(-10px);} }
+  .portrait-frame img{width:100%; display:block; border-radius:10px; aspect-ratio:4/5; object-fit:cover;}
+  .portrait-tag{
+    position:absolute; top:-14px; right:20px; background:var(--ochre); color:#1a1408;
+    font-family:'IBM Plex Mono', monospace; font-size:0.65rem; letter-spacing:0.06em;
+    padding:6px 12px; border-radius:5px; text-transform:uppercase;
+    box-shadow:0 6px 14px rgba(196,134,47,0.4); transform:rotate(-2deg);
+  }
+  .portrait-caption{margin-top:14px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:rgba(242,236,221,0.65);}
+
+  .hero-wave{position:absolute; bottom:-1px; left:0; width:100%; line-height:0; z-index:1;}
+  .hero-wave svg{width:100%; height:auto; display:block;}
+
+  /* ---------- sections ---------- */
+  section{padding:clamp(56px,8vw,96px) 0; position:relative; border-top:1px solid var(--line);}
+  .section-head{max-width:640px; margin-bottom:44px;}
+  .section-head h2{font-size:clamp(1.8rem,3.6vw,2.5rem); font-weight:650; margin-top:10px; letter-spacing:-0.02em;}
+  .section-head p{color:var(--ink-soft); margin-top:12px; font-size:1.02rem;}
+
+  .about-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:48px;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .traits{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
+  .trait{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; padding:8px 13px; border:1px solid var(--line); border-radius:20px; color:var(--pine-deep); background:var(--paper-card);}
+  .about-side{background:var(--paper-card); border:1px solid var(--line); border-radius:14px; padding:26px; align-self:start;}
+  .about-side .row{display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .about-side .row:last-child{border-bottom:none;}
+  .about-side .row .ico{
+    width:32px; height:32px; border-radius:8px; background:var(--pine); color:var(--paper);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.9rem;
+  }
+  .about-side .row b{display:block; font-family:'Fraunces', serif; font-weight:600; color:var(--pine-deep); font-size:0.95rem;}
+  .about-side .row span{font-size:0.82rem; color:var(--ink-soft);}
+
+  .services-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media (max-width:700px){.services-grid{grid-template-columns:1fr;}}
+  .service-card{background:var(--paper-card); border:1px solid var(--line); border-radius:14px; padding:26px; transition:transform .2s ease, box-shadow .2s ease;}
+  .service-card:hover{transform:translateY(-4px); box-shadow:0 16px 30px -18px rgba(30,64,58,0.3);}
+  .service-card .num{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ochre); letter-spacing:0.06em;}
+  .service-card h3{margin:12px 0 8px; font-size:1.18rem; font-weight:650;}
+  .service-card p{color:var(--ink-soft); font-size:0.9rem;}
+  .service-card .tags{margin-top:14px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--pine); letter-spacing:0.03em;}
+
+  .timeline{border-left:2px solid var(--line); padding-left:28px; display:flex; flex-direction:column; gap:36px; margin-left:6px;}
+  .tl-item{position:relative;}
+  .tl-item::before{content:""; position:absolute; left:-34px; top:6px; width:12px; height:12px; border-radius:50%; background:var(--ochre); box-shadow:0 0 0 4px var(--paper);}
+  .tl-item .eyebrow{margin-bottom:6px;}
+  .tl-item h3{font-size:1.2rem; margin-bottom:4px;}
+  .tl-item .org{font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--ink-soft); margin-bottom:10px; display:block;}
+  .tl-item p{color:var(--ink-soft); font-size:0.92rem; max-width:60ch;}
+  .tl-item .chips{margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;}
+  .tl-item .chip{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; padding:5px 10px; border:1px solid var(--line); border-radius:14px; color:var(--pine-deep);}
+
+  .certs-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  @media (max-width:700px){.certs-grid{grid-template-columns:1fr;}}
+  .cert-card{background:var(--paper-card); border:1px solid var(--line); border-radius:14px; overflow:hidden; cursor:pointer; transition:transform .2s ease, box-shadow .2s ease;}
+  .cert-card:hover{transform:translateY(-4px); box-shadow:0 16px 30px -18px rgba(30,64,58,0.3);}
+  .cert-card img{width:100%; display:block; aspect-ratio:16/10; object-fit:cover; border-bottom:1px solid var(--line);}
+  .cert-body{padding:18px 20px;}
+  .cert-body .eyebrow{margin-bottom:6px;}
+  .cert-body h3{font-size:1rem; line-height:1.3;}
+  .cert-body p{font-size:0.82rem; color:var(--ink-soft); margin-top:8px;}
+  .cert-body a{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--pine); margin-top:10px; display:inline-block;}
+
+  .qual-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  @media (max-width:760px){.qual-grid{grid-template-columns:repeat(2,1fr);}}
+  .qual-card{background:var(--paper-card); border:1px solid var(--line); border-radius:12px; padding:20px; text-align:center;}
+  .qual-card .glyph{font-family:'IBM Plex Mono', monospace; font-size:1rem; color:var(--ochre); margin-bottom:10px;}
+  .qual-card b{display:block; font-family:'Fraunces', serif; font-weight:600; color:var(--pine-deep); margin-bottom:4px;}
+  .qual-card span{font-size:0.8rem; color:var(--ink-soft);}
+
+  .contact-box{
+    position:relative; overflow:hidden;
+    background:linear-gradient(135deg, var(--pine-black), var(--pine-deep));
+    color:var(--paper); border-radius:18px; padding:clamp(32px,6vw,56px);
+    display:grid; grid-template-columns:1.2fr 1fr; gap:32px; align-items:center;
+  }
+  .contact-box::before{
+    content:""; position:absolute; width:260px; height:260px; border-radius:50%;
+    background:radial-gradient(circle, var(--ochre), transparent 70%); opacity:0.35; filter:blur(50px);
+    top:-80px; right:-60px; animation:drift3 20s ease-in-out infinite;
+  }
+  @media (max-width:760px){.contact-box{grid-template-columns:1fr;}}
+  .contact-box h2{color:var(--paper);}
+  .contact-box p{color:rgba(242,236,221,0.75); margin-top:12px; max-width:44ch;}
+  .contact-links{display:flex; flex-direction:column; gap:12px; position:relative; z-index:1;}
+  .contact-links a{
+    display:flex; align-items:center; gap:12px; background:rgba(242,236,221,0.08);
+    border:1px solid rgba(242,236,221,0.18); padding:14px 18px; border-radius:10px; font-size:0.9rem;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .contact-links a:hover{background:rgba(242,236,221,0.16); transform:translateX(4px);}
+  .contact-links .ico{
+    width:28px; height:28px; border-radius:7px; background:var(--ochre); color:#1a1408;
+    display:flex; align-items:center; justify-content:center; font-size:0.8rem; flex-shrink:0;
+  }
+
+  footer{padding:32px 0 60px; text-align:center; color:var(--ink-soft); font-size:0.8rem; font-family:'IBM Plex Mono', monospace;}
+
+  .lightbox{position:fixed; inset:0; background:rgba(11,29,25,0.92); display:none; align-items:center; justify-content:center; z-index:100; padding:24px;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(720px,92vw); max-height:86vh; border-radius:10px; box-shadow:0 30px 60px rgba(0,0,0,0.5);}
+  .lightbox-close{position:absolute; top:24px; right:28px; color:var(--paper); font-family:'IBM Plex Mono', monospace; font-size:0.9rem; cursor:pointer; border:1px solid rgba(242,236,221,0.4); padding:8px 14px; border-radius:6px;}
+
+  /* scroll-reveal */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in-view{opacity:1; transform:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+    .reveal{opacity:1; transform:none;}
+  }
+  ::selection{background:var(--ochre); color:#fff;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--ochre); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<div class="tab-rail" aria-hidden="true">
+  <a href="#about" data-i18n="nav.about">À propos</a>
+  <a href="#services" data-i18n="nav.services">Services</a>
+  <a href="#experience" data-i18n="nav.experience">Parcours</a>
+  <a href="#certifications" data-i18n="nav.certs">Certifs</a>
+  <a href="#contact" data-i18n="nav.contact">Contact</a>
+</div>
+
+<div class="shell">
+
+  <header class="top" id="siteHeader">
+    <div class="wrap topbar">
+      <div class="brand"><span class="mark">DA</span> Diaby Assita</div>
+      <nav class="desktop-nav">
+        <a href="#about" data-i18n="nav.about">À propos</a>
+        <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#experience" data-i18n="nav.experience">Parcours</a>
+        <a href="#certifications" data-i18n="nav.certsFull">Certifications</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="top-right">
+        <div class="status-pill"><span class="dot"></span> <span data-i18n="nav.available">Disponible</span></div>
+        <div class="lang-toggle" role="group" aria-label="Langue / Language">
+          <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+          <button id="btn-en" onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero-outer">
+    <div class="hero-blobs" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <div class="hero-dots" aria-hidden="true"></div>
+
+    <section class="hero" style="border-top:none; padding-top:calc(64px + 96px);">
+      <div>
+        <span class="eyebrow" data-i18n="hero.eyebrow">Virtual Assistance · Customer Service · Client Management</span>
+        <h1 data-i18n-html="hero.title">Le sens du service,<br><em>l'efficacité</em> au quotidien.</h1>
+        <p class="lede" data-i18n="hero.lede">Je suis Diaby Assita, une professionnelle chaleureuse, disciplinée et organisée. J'accompagne les entreprises dans leur relation client, leur organisation et leurs tâches à distance, avec sérieux et adaptabilité.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#contact" data-i18n="hero.ctaContact">Me contacter ↗</a>
+          <a class="btn btn-ghost" href="#experience" data-i18n="hero.ctaPath">Voir mon parcours ↓</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b>2</b><span data-i18n="hero.stat1">Expériences</span></div>
+          <div class="stat"><b>FR·EN</b><span data-i18n="hero.stat2">Langues</span></div>
+          <div class="stat"><b>2</b><span data-i18n="hero.stat3">Certifications</span></div>
+        </div>
+      </div>
+
+      <div class="portrait-card">
+        <div class="portrait-frame">
+          <span class="portrait-tag" data-i18n="hero.tag">Professional &amp; human</span>
+          <img src="assets/assita-diaby.jpg" alt="Portrait professionnel de Diaby Assita">
+        </div>
+        <div class="portrait-caption" data-i18n="hero.caption">Un service qui commence par l'écoute.</div>
+      </div>
+    </section>
+
+    <div class="hero-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,90 1080,-10 1440,40 L1440,80 L0,80 Z" fill="#F2ECDD"></path></svg>
+    </div>
+  </div>
+
+  <main class="wrap">
+
+    <section id="about">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="about.eyebrow">01 — À propos</span>
+        <h2 data-i18n-html="about.title">Une approche <em>professionnelle</em> et humaine.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p data-i18n="about.p1">Mon objectif est de faciliter le quotidien des équipes tout en offrant aux clients une expérience claire, rassurante et satisfaisante.</p>
+          <p style="margin-top:16px;" data-i18n="about.p2">J'apprends vite, je suis disciplinée et j'aime utiliser les outils technologiques pour gagner en efficacité. Découvrir un nouvel outil ou une nouvelle méthode de travail n'est pas un frein : c'est une occasion d'apprendre et de progresser.</p>
+          <div class="traits">
+            <span class="trait" data-i18n="about.t1">Disciplinée</span>
+            <span class="trait" data-i18n="about.t2">Chaleureuse</span>
+            <span class="trait" data-i18n="about.t3">Apprentissage rapide</span>
+            <span class="trait" data-i18n="about.t4">Organisée</span>
+            <span class="trait" data-i18n="about.t5">À l'aise avec la technologie</span>
+            <span class="trait" data-i18n="about.t6">Orientée client</span>
+          </div>
+        </div>
+        <div class="about-side reveal">
+          <div class="row"><div class="ico">✉</div><div><b data-i18n="about.r1t">Disponibilité</b><span data-i18n="about.r1s">Freelance & temps plein</span></div></div>
+          <div class="row"><div class="ico">FR</div><div><b data-i18n="about.r2t">Français</b><span data-i18n="about.r2s">Très bonne maîtrise</span></div></div>
+          <div class="row"><div class="ico">EN</div><div><b data-i18n="about.r3t">Anglais</b><span data-i18n="about.r3s">Bonne maîtrise</span></div></div>
+          <div class="row"><div class="ico">◈</div><div><b data-i18n="about.r4t">Base</b><span data-i18n="about.r4s">Abidjan, Côte d'Ivoire</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="services.eyebrow">02 — Services</span>
+        <h2 data-i18n-html="services.title">Ce que je peux <em>apporter.</em></h2>
+        <p data-i18n="services.lede">Un support fiable pour les tâches qui demandent organisation, réactivité et sens du contact.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <span class="num">01</span>
+          <h3 data-i18n="services.s1t">Virtual Assistance</h3>
+          <p data-i18n="services.s1p">Assistance administrative, organisation, suivi des tâches et support à distance.</p>
+          <div class="tags" data-i18n="services.s1tags">Organisation · Suivi · Support</div>
+        </div>
+        <div class="service-card reveal">
+          <span class="num">02</span>
+          <h3 data-i18n="services.s2t">Customer Service</h3>
+          <p data-i18n="services.s2p">Accueil, écoute, réponse aux demandes et gestion professionnelle des préoccupations.</p>
+          <div class="tags" data-i18n="services.s2tags">Écoute · Réactivité · Satisfaction</div>
+        </div>
+        <div class="service-card reveal">
+          <span class="num">03</span>
+          <h3 data-i18n="services.s3t">Client Management</h3>
+          <p data-i18n="services.s3p">Suivi de la relation client, orientation vers les solutions adaptées et communication claire.</p>
+          <div class="tags" data-i18n="services.s3tags">Relation · Communication · Suivi</div>
+        </div>
+        <div class="service-card reveal">
+          <span class="num">04</span>
+          <h3 data-i18n="services.s4t">Digital Support</h3>
+          <p data-i18n="services.s4p">Prise en main rapide des outils numériques et adaptation aux méthodes de travail de l'entreprise.</p>
+          <div class="tags" data-i18n="services.s4tags">Technologie · Adaptabilité · Efficacité</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="exp.eyebrow">03 — Parcours</span>
+        <h2 data-i18n-html="exp.title">Expérience <em>professionnelle.</em></h2>
+        <p data-i18n="exp.lede">Deux expériences qui ont renforcé mon sens de l'organisation, de la coordination et de la relation client.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <span class="eyebrow" data-i18n="exp.e1tag">Stage</span>
+          <h3 data-i18n="exp.e1t">Chargée de la programmation de la ligne</h3>
+          <span class="org">Société Abidjanaise de Transport</span>
+          <p data-i18n="exp.e1p">Participation à la programmation et à l'organisation des lignes de transport, avec rigueur, coordination et attention portée aux informations opérationnelles.</p>
+          <div class="chips"><span class="chip" data-i18n="exp.e1c1">Planification</span><span class="chip" data-i18n="exp.e1c2">Organisation</span><span class="chip" data-i18n="exp.e1c3">Coordination</span></div>
+        </div>
+        <div class="tl-item reveal">
+          <span class="eyebrow" data-i18n="exp.e2tag">Contrat</span>
+          <h3 data-i18n="exp.e2t">Chargée de la clientèle</h3>
+          <span class="org">Ivory Coast Diaspora SARL</span>
+          <p data-i18n="exp.e2p">Accueil et accompagnement de la clientèle, gestion des préoccupations et orientation vers des solutions adaptées. Une expérience qui a développé mon écoute, ma réactivité et mon sens du service.</p>
+          <div class="chips"><span class="chip">Customer Service</span><span class="chip">Client Management</span><span class="chip" data-i18n="exp.e2c3">Communication</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="certs.eyebrow">04 — Certifications</span>
+        <h2 data-i18n-html="certs.title">Formations qui <em>renforcent mon profil.</em></h2>
+        <p data-i18n="certs.lede">Deux attestations qui témoignent de ma démarche de formation continue. Cliquez sur une certification pour l'agrandir.</p>
+      </div>
+      <div class="certs-grid">
+        <div class="cert-card reveal" onclick="openLightbox('assets/certificat-coursera.jpg')">
+          <img src="assets/certificat-coursera.jpg" alt="Certificat Coursera de Diaby Assita">
+          <div class="cert-body">
+            <span class="eyebrow">Coursera · UCI Division of Continuing Education</span>
+            <h3>Work Smarter, Not Harder: Time Management for Personal &amp; Professional Productivity</h3>
+            <p data-i18n="certs.c1p">Certification portant sur la gestion du temps et la productivité personnelle et professionnelle.</p>
+            <a href="https://www.coursera.org/verify/VFCF56IGISOY" target="_blank" rel="noopener" data-i18n="certs.verify">Vérifier le certificat ↗</a>
+          </div>
+        </div>
+        <div class="cert-card reveal" onclick="openLightbox('assets/certificat-kaizen.jpg')">
+          <img src="assets/certificat-kaizen.jpg" alt="Attestation de formation complémentaire qualifiante Kaizen">
+          <div class="cert-body">
+            <span class="eyebrow">Kaizene · Agence Emploi Jeunes</span>
+            <h3 data-i18n="certs.c2t">Attestation de formation complémentaire qualifiante</h3>
+            <p data-i18n="certs.c2p">Formation complémentaire qualifiante en communication, session 2022, réalisée dans le cadre du dispositif Kaizene.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="qualities" style="padding-top:0;">
+      <div class="qual-grid">
+        <div class="qual-card reveal"><div class="glyph">FR</div><b data-i18n="about.r2t">Français</b><span data-i18n="about.r2s">Très bonne maîtrise</span></div>
+        <div class="qual-card reveal"><div class="glyph">EN</div><b data-i18n="about.r3t">Anglais</b><span data-i18n="about.r3s">Bonne maîtrise</span></div>
+        <div class="qual-card reveal"><div class="glyph">✦</div><b data-i18n="qual.q3t">Relationnel</b><span data-i18n="qual.q3s">Chaleureuse &amp; à l'écoute</span></div>
+        <div class="qual-card reveal"><div class="glyph">↗</div><b data-i18n="qual.q4t">Adaptabilité</b><span data-i18n="qual.q4s">Apprend rapidement</span></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-box reveal">
+        <div>
+          <span class="eyebrow" style="color:var(--gold-light);" data-i18n="contact.eyebrow">05 — Contact</span>
+          <h2 data-i18n-html="contact.title">Parlons de votre <em>prochain besoin.</em></h2>
+          <p data-i18n="contact.lede">Une mission freelance, une opportunité à temps plein ou simplement envie d'échanger ? Je serai ravie de vous répondre.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:Diabyassita17@gmail.com"><span class="ico">✉</span> Diabyassita17@gmail.com</a>
+          <a href="https://wa.me/2250747324047" target="_blank" rel="noopener"><span class="ico">◉</span> WhatsApp · +225 07 47 32 40 47</a>
+          <a href="https://www.linkedin.com/in/assita-diaby-37ab79242/" target="_blank" rel="noopener"><span class="ico">in</span> LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer><span data-i18n="footer.text">© 2026 Diaby Assita — Virtual Assistance · Customer Service · Client Management</span></footer>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" data-i18n="lightbox.close">Fermer ✕</span>
+  <img id="lightbox-img" src="" alt="Certification agrandie">
+</div>
+
+<script>
+  const translations = {
+    en: {
+      "nav.about":"About", "nav.services":"Services", "nav.experience":"Experience",
+      "nav.certs":"Certs", "nav.certsFull":"Certifications", "nav.contact":"Contact",
+      "nav.available":"Available",
+      "hero.eyebrow":"Virtual Assistance · Customer Service · Client Management",
+      "hero.title":"A service mindset, <em>efficiency</em> every day.",
+      "hero.lede":"I'm Diaby Assita, a warm, disciplined and organised professional. I support businesses with client relations, organisation and remote tasks, with rigor and adaptability.",
+      "hero.ctaContact":"Contact me ↗", "hero.ctaPath":"See my journey ↓",
+      "hero.stat1":"Experiences", "hero.stat2":"Languages", "hero.stat3":"Certifications",
+      "hero.tag":"Professional &amp; human", "hero.caption":"A service that starts with listening.",
+      "about.eyebrow":"01 — About",
+      "about.title":"A <em>professional</em> and human approach.",
+      "about.p1":"My goal is to make everyday work easier for teams while giving clients a clear, reassuring and satisfying experience.",
+      "about.p2":"I learn fast, I'm disciplined, and I enjoy using technology to work more efficiently. Discovering a new tool or way of working isn't a hurdle — it's a chance to learn and grow.",
+      "about.t1":"Disciplined", "about.t2":"Warm", "about.t3":"Fast learner", "about.t4":"Organised",
+      "about.t5":"Tech-savvy", "about.t6":"Client-focused",
+      "about.r1t":"Availability", "about.r1s":"Freelance & full-time",
+      "about.r2t":"French", "about.r2s":"Native / fluent",
+      "about.r3t":"English", "about.r3s":"Good working level",
+      "about.r4t":"Based in", "about.r4s":"Abidjan, Ivory Coast",
+      "services.eyebrow":"02 — Services",
+      "services.title":"What I can <em>bring.</em>",
+      "services.lede":"Reliable support for tasks that need organisation, responsiveness and a personal touch.",
+      "services.s1t":"Virtual Assistance", "services.s1p":"Administrative support, organisation, task follow-up and remote assistance.", "services.s1tags":"Organisation · Follow-up · Support",
+      "services.s2t":"Customer Service", "services.s2p":"Welcoming clients, listening, responding to requests and handling concerns professionally.", "services.s2tags":"Listening · Responsiveness · Satisfaction",
+      "services.s3t":"Client Management", "services.s3p":"Tracking client relationships, guiding towards the right solutions and clear communication.", "services.s3tags":"Relationship · Communication · Follow-up",
+      "services.s4t":"Digital Support", "services.s4p":"Quick onboarding onto digital tools and adapting to the company's ways of working.", "services.s4tags":"Technology · Adaptability · Efficiency",
+      "exp.eyebrow":"03 — Experience",
+      "exp.title":"Professional <em>experience.</em>",
+      "exp.lede":"Two experiences that strengthened my sense of organisation, coordination and client relations.",
+      "exp.e1tag":"Internship", "exp.e1t":"Transport line scheduling officer",
+      "exp.e1p":"Took part in scheduling and organising transport lines, with rigor, coordination and close attention to operational information.",
+      "exp.e1c1":"Planning", "exp.e1c2":"Organisation", "exp.e1c3":"Coordination",
+      "exp.e2tag":"Contract", "exp.e2t":"Client relations officer",
+      "exp.e2p":"Welcomed and supported clients, handled concerns and guided them towards the right solutions. An experience that developed my listening skills, responsiveness and sense of service.",
+      "exp.e2c3":"Communication",
+      "certs.eyebrow":"04 — Certifications",
+      "certs.title":"Training that <em>strengthens my profile.</em>",
+      "certs.lede":"Two certificates reflecting my ongoing commitment to training. Click a certification to enlarge it.",
+      "certs.c1p":"Certification on time management and personal & professional productivity.",
+      "certs.verify":"Verify certificate ↗",
+      "certs.c2t":"Supplementary qualifying training certificate",
+      "certs.c2p":"Supplementary qualifying training in communication, 2022 session, completed under the Kaizene programme.",
+      "qual.q3t":"Interpersonal skills", "qual.q3s":"Warm &amp; attentive",
+      "qual.q4t":"Adaptability", "qual.q4s":"Fast learner",
+      "contact.eyebrow":"05 — Contact",
+      "contact.title":"Let's talk about your <em>next need.</em>",
+      "contact.lede":"A freelance mission, a full-time opportunity, or just want to connect? I'd be glad to hear from you.",
+      "footer.text":"© 2026 Diaby Assita — Virtual Assistance · Customer Service · Client Management",
+      "lightbox.close":"Close ✕"
+    }
+  };
+
+  const originalText = new Map();
+  const originalHtml = new Map();
+  document.querySelectorAll('[data-i18n]').forEach(el=> originalText.set(el, el.textContent));
+  document.querySelectorAll('[data-i18n-html]').forEach(el=> originalHtml.set(el, el.innerHTML));
+
+  function setLang(lang){
+    document.getElementById('btn-fr').classList.toggle('active', lang==='fr');
+    document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(lang === 'fr'){ el.textContent = originalText.get(el); }
+      else if(translations.en[key]){ el.textContent = translations.en[key]; }
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-html');
+      if(lang === 'fr'){ el.innerHTML = originalHtml.get(el); }
+      else if(translations.en[key]){ el.innerHTML = translations.en[key]; }
+    });
+  }
+
+  function openLightbox(src){
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+
+  // active tab highlight
+  const sections = document.querySelectorAll('main section[id]');
+  const tabLinks = document.querySelectorAll('.tab-rail a');
+  const navIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = e.target.getAttribute('id');
+        tabLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href') === '#'+id));
+      }
+    });
+  }, {rootMargin:'-40% 0px -50% 0px'});
+  sections.forEach(s=> navIo.observe(s));
+
+  // scroll reveal
+  const revealIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in-view'); revealIo.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=> revealIo.observe(el));
+
+  // header solid-on-scroll
+  const header = document.getElementById('siteHeader');
+  const heroOuter = document.querySelector('.hero-outer');
+  function updateHeader(){
+    const threshold = heroOuter.offsetHeight - 90;
+    header.classList.toggle('scrolled', window.scrollY > threshold);
+  }
+  window.addEventListener('scroll', updateHeader, {passive:true});
+  updateHeader();
+</script>
+
+</body>
+</html>
